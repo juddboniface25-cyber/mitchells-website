@@ -14,14 +14,14 @@ export default function EventsPage() {
       {/* Hero — sunset over the water */}
       <section className="relative border-b-[1.5px] border-line overflow-hidden">
         <Image
-          src="/images/lake-sunset.jpg"
-          alt="Sunset over Smith Mountain Lake at Mitchell's"
+          src="/images/hero-events.jpg"
+          alt="Smith Mountain Lake and the mountains beyond Mitchell's Point Marina"
           fill
           priority
-          className="object-cover object-top"
+          className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 to-black/55" />
         <div className="relative mx-auto max-w-6xl px-5 py-16 md:py-20 text-center">
           <h1 className="font-script font-bold text-4xl md:text-5xl text-white [text-shadow:0_2px_14px_rgba(0,0,0,.45)]">
             Live Music at the Lake ♪
@@ -39,7 +39,7 @@ export default function EventsPage() {
           <div className="relative w-full md:w-64 h-40 rounded-[9px] overflow-hidden border-[1.5px] border-line shrink-0">
             <Image
               src="/images/social-lake.jpg"
-              alt="Evening on the water at Mitchell's"
+              alt="Mitchell's Point Marina docks on Smith Mountain Lake"
               fill
               className="object-cover"
               sizes="(min-width: 768px) 256px, 100vw"

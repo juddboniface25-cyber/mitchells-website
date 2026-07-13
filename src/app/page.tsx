@@ -5,17 +5,17 @@ import { performers, restaurant } from "@/data/restaurant";
 export default function Home() {
   return (
     <>
-      {/* Hero — sunset over Smith Mountain Lake from Mitchell's waterfront */}
+      {/* Hero — aerial sunrise over Mitchell's Point Marina, Smith Mountain Lake */}
       <section className="relative border-b-[1.5px] border-line overflow-hidden">
         <Image
-          src="/images/lake-sunset.jpg"
-          alt="Sunset over Smith Mountain Lake from Mitchell's waterfront"
+          src="/images/hero.jpg"
+          alt="Aerial view of Mitchell's Point Marina at sunrise on Smith Mountain Lake"
           fill
           priority
           className="object-cover"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/30 to-black/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/35 to-black/55" />
         <div className="relative mx-auto max-w-6xl px-5 py-24 md:py-32 flex flex-col items-center text-center gap-6">
           <h1 className="font-script font-bold text-5xl md:text-6xl leading-[1.05] text-white max-w-2xl [text-shadow:0_2px_14px_rgba(0,0,0,.45)]">
             The Lake Is Calling and We&apos;ve Got the Table.
@@ -158,7 +158,7 @@ export default function Home() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto">
             {[
               { src: "/images/social-pizza.jpg", alt: "Margherita pizza fresh out of Mitchell's oven" },
-              { src: "/images/social-lake.jpg", alt: "Sunset over Smith Mountain Lake at Mitchell's" },
+              { src: "/images/social-lake.jpg", alt: "Mitchell's Point Marina on Smith Mountain Lake from the air" },
               { src: "/images/social-nachos.jpg", alt: "Nachos Grande at Mitchell's" },
             ].map((img) => (
               <div

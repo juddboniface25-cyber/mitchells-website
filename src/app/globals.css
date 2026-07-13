@@ -48,3 +48,24 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Consistent 200ms color transitions on interactive elements */
+a,
+button {
+  transition:
+    color 0.2s ease-out,
+    background-color 0.2s ease-out,
+    border-color 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
