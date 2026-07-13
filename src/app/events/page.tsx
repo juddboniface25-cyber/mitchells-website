@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { performers, restaurant } from "@/data/restaurant";
 
 export const metadata: Metadata = {
@@ -10,13 +11,22 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <>
-      {/* Hero — stage-at-sunset photo slot */}
-      <section className="stripes border-b-[1.5px] border-line">
-        <div className="mx-auto max-w-6xl px-5 py-16 md:py-20 text-center">
-          <h1 className="font-script font-bold text-4xl md:text-5xl text-ink">
+      {/* Hero — sunset over the water */}
+      <section className="relative border-b-[1.5px] border-line overflow-hidden">
+        <Image
+          src="/images/lake-sunset.jpg"
+          alt="Sunset over Smith Mountain Lake at Mitchell's"
+          fill
+          priority
+          className="object-cover object-top"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-black/45" />
+        <div className="relative mx-auto max-w-6xl px-5 py-16 md:py-20 text-center">
+          <h1 className="font-script font-bold text-4xl md:text-5xl text-white [text-shadow:0_2px_14px_rgba(0,0,0,.45)]">
             Live Music at the Lake ♪
           </h1>
-          <p className="font-display font-medium text-muted mt-3 max-w-xl mx-auto">
+          <p className="font-display font-medium text-cream mt-3 max-w-xl mx-auto [text-shadow:0_1px_8px_rgba(0,0,0,.5)]">
             Bands on the water, sunsets over Smith Mountain Lake, and a table
             waiting for you.
           </p>
@@ -26,7 +36,15 @@ export default function EventsPage() {
       {/* This week */}
       <section className="border-b-[1.5px] border-line">
         <div className="mx-auto max-w-6xl px-5 py-12 flex flex-col md:flex-row gap-6 md:items-center">
-          <div className="stripes w-full md:w-64 h-40 rounded-[9px] border-[1.5px] border-dashed border-[#cfccc2] shrink-0" />
+          <div className="relative w-full md:w-64 h-40 rounded-[9px] overflow-hidden border-[1.5px] border-line shrink-0">
+            <Image
+              src="/images/social-lake.jpg"
+              alt="Evening on the water at Mitchell's"
+              fill
+              className="object-cover"
+              sizes="(min-width: 768px) 256px, 100vw"
+            />
+          </div>
           <div className="flex flex-col gap-3 items-start">
             <span className="px-3 py-1 bg-olive text-white rounded-md font-display font-medium text-sm">
               THIS WEEK&apos;S LINEUP
