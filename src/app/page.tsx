@@ -58,15 +58,27 @@ export default function Home() {
           <div className="grid gap-5 sm:grid-cols-3">
             {performers.slice(0, 3).map((p) => (
               <div
-                key={p}
+                key={p.name}
                 className="border-[1.5px] border-dashed border-[#cfccc2] rounded-[9px] p-4 bg-white/40"
               >
-                <div className="stripes h-24 rounded-md mb-3" />
+                {p.photo ? (
+                  <div className="relative h-24 rounded-md mb-3 overflow-hidden">
+                    <Image
+                      src={p.photo}
+                      alt={p.photoAlt ?? p.name}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 640px) 33vw, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="stripes h-24 rounded-md mb-3" />
+                )}
                 <div className="font-display font-semibold text-pine text-sm uppercase tracking-wide">
                   On the stage
                 </div>
                 <div className="font-display font-medium text-ink text-lg mt-1">
-                  {p}
+                  {p.name}
                 </div>
               </div>
             ))}

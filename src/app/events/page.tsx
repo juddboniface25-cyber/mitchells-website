@@ -86,12 +86,24 @@ export default function EventsPage() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {performers.map((p) => (
               <div
-                key={p}
+                key={p.name}
                 className="border-[1.5px] border-dashed border-[#cfccc2] rounded-[9px] p-4 bg-white/60"
               >
-                <div className="stripes h-24 rounded-md mb-3" />
+                {p.photo ? (
+                  <div className="relative h-40 rounded-md mb-3 overflow-hidden">
+                    <Image
+                      src={p.photo}
+                      alt={p.photoAlt ?? p.name}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                ) : (
+                  <div className="stripes h-40 rounded-md mb-3" />
+                )}
                 <div className="font-display font-medium text-ink text-lg">
-                  {p}
+                  {p.name}
                 </div>
                 <div className="text-sm text-faint">Live at Mitchell&apos;s</div>
               </div>
