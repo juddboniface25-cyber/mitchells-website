@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-olive: #7ba63f;
+  --color-olive-dark: #5f8a2c;
+  --color-pine: #2f7d3f;
+  --color-cream: #fbf7ec;
+  --color-cream-dark: #efece5;
+  --color-cream-alt: #f6f4ee;
+  --color-ink: #26331d;
+  --color-body: #3a3a36;
+  --color-muted: #7c7768;
+  --color-faint: #8a877e;
+  --color-terracotta: #e14b25;
+  --color-gold: #f4c020;
+  --color-teal-brand: #12857a;
+  --color-lake: #1f8fc4;
+  --color-tangerine: #f39a12;
+  --color-butter: #ffe08a;
+  --color-leader: #cdbd97;
+  --color-line: #e4e1d7;
+}
+
+@theme inline {
+  --font-script: var(--font-caveat);
+  --font-display: var(--font-fredoka);
+  --font-menu: var(--font-barlow);
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-body);
+  font-family: system-ui, sans-serif;
+}
+
+/* Diagonal-stripe placeholder pattern — part of the brand language until
+   real photography is supplied (see design reference). */
+.stripes {
+  background: repeating-linear-gradient(
+    48deg,
+    #e8e5db,
+    #e8e5db 11px,
+    #dedbcf 11px,
+    #dedbcf 22px
+  );
+}
+
+html {
+  scroll-behavior: smooth;
+}
