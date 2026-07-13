@@ -18,6 +18,7 @@ export default function EventsPage() {
           alt="Smith Mountain Lake and the mountains beyond Mitchell's Point Marina"
           fill
           priority
+          quality={85}
           className="object-cover"
           sizes="100vw"
         />

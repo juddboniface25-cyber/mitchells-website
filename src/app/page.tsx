@@ -12,6 +12,7 @@ export default function Home() {
           alt="Aerial view of Mitchell's Point Marina at sunrise on Smith Mountain Lake"
           fill
           priority
+          quality={85}
           className="object-cover"
           sizes="100vw"
         />
