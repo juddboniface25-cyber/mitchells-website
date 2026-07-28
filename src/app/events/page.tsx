@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Button } from "@/components/Button";
 import { performers, restaurant } from "@/data/restaurant";
 
 export const metadata: Metadata = {
-  title: `Live Music & Events — ${restaurant.name}`,
+  title: "Live Music & Events",
   description:
     "Live music on the lake at Mitchell's Restaurant & Pizzeria, Huddleston VA. See this week's lineup on Facebook.",
 };
@@ -59,20 +60,12 @@ export default function EventsPage() {
               page. Give it a follow so you never miss a show.
             </p>
             <div className="flex flex-wrap gap-3 mt-1">
-              <a
-                href={restaurant.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 bg-olive text-white rounded-lg border-2 border-olive-dark font-display font-medium hover:bg-olive-dark"
-              >
+              <Button href={restaurant.facebookUrl} external>
                 See the Lineup on Facebook
-              </a>
-              <a
-                href={restaurant.phoneHref}
-                className="px-5 py-2.5 bg-white border-2 border-[#cfccc2] rounded-lg font-display font-medium hover:border-olive"
-              >
+              </Button>
+              <Button href={restaurant.phoneHref} variant="secondary">
                 Reserve a Table for the Show
-              </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -88,7 +81,7 @@ export default function EventsPage() {
             {performers.map((p) => (
               <div
                 key={p.name}
-                className="border-[1.5px] border-dashed border-[#cfccc2] rounded-[9px] p-4 bg-white/60"
+                className="border-[1.5px] border-dashed border-line-strong rounded-[9px] p-4 bg-white/60"
               >
                 {p.photo ? (
                   <div className="relative h-40 rounded-md mb-3 overflow-hidden">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/Button";
 import { performers, restaurant } from "@/data/restaurant";
 
 export default function Home() {
@@ -26,18 +27,12 @@ export default function Home() {
             Lake — Huddleston, VA
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-2">
-            <a
-              href={restaurant.phoneHref}
-              className="px-6 py-3 bg-olive text-white rounded-lg border-2 border-olive-dark font-display font-medium hover:bg-olive-dark"
-            >
+            <Button href={restaurant.phoneHref} size="lg">
               Reserve a Table
-            </a>
-            <Link
-              href="/events"
-              className="px-6 py-3 bg-white/95 border-2 border-[#cfccc2] rounded-lg font-display font-medium hover:border-olive"
-            >
+            </Button>
+            <Button href="/events" variant="secondary" size="lg">
               See Live Music ♪
-            </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -60,7 +55,7 @@ export default function Home() {
             {performers.slice(0, 3).map((p) => (
               <div
                 key={p.name}
-                className="border-[1.5px] border-dashed border-[#cfccc2] rounded-[9px] p-4 bg-white/40"
+                className="border-[1.5px] border-dashed border-line-strong rounded-[9px] p-4 bg-white/40"
               >
                 {p.photo ? (
                   <div className="relative h-24 rounded-md mb-3 overflow-hidden">
@@ -120,28 +115,25 @@ export default function Home() {
               and lake-day baskets — plus breakfast on weekend mornings.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-3 mb-7 font-display font-medium text-sm">
-              <span className="px-4 py-1.5 rounded-full text-[#2b6b2f] bg-gold">
+              <span className="px-4 py-1.5 rounded-full text-ink bg-gold">
                 starters
               </span>
-              <span className="px-4 py-1.5 rounded-full text-white bg-terracotta">
+              <span className="px-4 py-1.5 rounded-full text-white bg-terracotta-deep">
                 salads
               </span>
-              <span className="px-4 py-1.5 rounded-full text-butter bg-teal-brand">
+              <span className="px-4 py-1.5 rounded-full text-butter bg-teal-deep">
                 pizza
               </span>
-              <span className="px-4 py-1.5 rounded-full text-butter bg-pine">
+              <span className="px-4 py-1.5 rounded-full text-butter bg-pine-deep">
                 sandwiches
               </span>
-              <span className="px-4 py-1.5 rounded-full text-white bg-lake">
+              <span className="px-4 py-1.5 rounded-full text-white bg-lake-deep">
                 sides
               </span>
             </div>
-            <Link
-              href="/menu"
-              className="inline-block px-6 py-3 bg-olive text-white rounded-lg border-2 border-olive-dark font-display font-medium hover:bg-olive-dark"
-            >
+            <Button href="/menu" size="lg">
               See the Full Menu
-            </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -184,14 +176,9 @@ export default function Home() {
               />
             </div>
           </div>
-          <a
-            href={restaurant.facebookUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-7 px-5 py-2.5 bg-olive text-white rounded-lg border-2 border-olive-dark font-display font-medium hover:bg-olive-dark"
-          >
+          <Button href={restaurant.facebookUrl} external className="mt-7">
             Follow on Facebook
-          </a>
+          </Button>
         </div>
       </section>
 

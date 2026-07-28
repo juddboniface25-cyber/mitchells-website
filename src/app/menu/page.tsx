@@ -10,7 +10,7 @@ import {
 import { restaurant } from "@/data/restaurant";
 
 export const metadata: Metadata = {
-  title: `Menu — ${restaurant.name}`,
+  title: "Menu",
   description:
     "Starters, salads, pizza, sandwiches, dinner plates and more at Mitchell's Restaurant & Pizzeria, Huddleston VA.",
 };
@@ -88,8 +88,7 @@ function Section({ section }: { section: MenuSection }) {
       )}
       {section.inlineNote && (
         <p
-          className="mt-1.5 font-display font-semibold text-[15px]"
-          style={{ color: section.bannerBg === "#f4c020" ? "#7c7768" : section.bannerBg }}
+          className="mt-1.5 font-display font-semibold text-[15px] text-pine"
         >
           {section.inlineNote}
         </p>
@@ -166,19 +165,19 @@ export default function MenuPage() {
         <h1 className="font-display font-semibold text-4xl md:text-5xl leading-none tracking-[.5px]">
           Our Menu
         </h1>
-        <p className="mt-2.5 font-menu font-semibold text-[13px] tracking-widest uppercase text-[#d7ebc9]">
+        <p className="mt-2.5 font-menu font-semibold text-[13px] tracking-widest uppercase text-[#eef7e8]">
           {restaurant.addressShort} · {restaurant.phoneDisplay}
         </p>
       </div>
 
       {/* Category chips */}
-      <div className="sticky top-[73px] z-40 bg-cream/95 backdrop-blur border-b-[1.5px] border-line overflow-x-auto">
+      <div className="sticky top-[calc(var(--nav-h)+1.5px)] z-40 bg-cream/95 backdrop-blur border-b-[1.5px] border-line overflow-x-auto">
         <div className="mx-auto max-w-5xl px-5 py-2.5 flex gap-2 whitespace-nowrap">
           {menuCategories.map((c) => (
             <a
               key={c.id}
               href={`#${c.id}`}
-              className="font-display font-medium text-[13px] px-3 py-1 rounded-full border border-[#cfccc2] text-body hover:border-olive hover:text-pine"
+              className="font-display font-medium text-[13px] px-3 py-1 rounded-full border border-control text-body hover:border-olive hover:text-pine"
             >
               {c.label}
             </a>
@@ -194,7 +193,7 @@ export default function MenuPage() {
         {after.map((s) => (
           <Section key={s.id} section={s} />
         ))}
-        <p className="mt-6 text-center italic text-[11px] text-[#a29a86] max-w-2xl mx-auto">
+        <p className="mt-6 text-center italic text-[11px] text-faint max-w-2xl mx-auto">
           {finePrint}
         </p>
       </div>

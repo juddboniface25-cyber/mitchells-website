@@ -1,8 +1,15 @@
 export const restaurant = {
   name: "Mitchell's Restaurant & Pizzeria",
   shortName: "Mitchell's",
+  // Canonical origin. Swap to the custom domain once one is registered —
+  // metadataBase, the sitemap and the JSON-LD all read from here.
+  siteUrl: "https://mitchells-website.vercel.app",
   address: "3553 Trading Post Rd, Huddleston, VA 24104",
   addressShort: "3553 Trading Post Rd, Huddleston, VA",
+  streetAddress: "3553 Trading Post Rd",
+  city: "Huddleston",
+  region: "VA",
+  postalCode: "24104",
   phoneDisplay: "(540) 296-0664",
   phoneHref: "tel:+15402960664",
   facebookHandle: "@meetmeatmitchells",
@@ -18,6 +25,18 @@ export const restaurant = {
     { days: "Sunday", time: "8:00am – 8:00pm" },
   ],
   hoursShort: "Mon–Thu 11–9 · Fri 11–10 · Sat 8–9 · Sun 8–8",
+  // Machine-readable mirror of `hours`, for schema.org openingHoursSpecification.
+  // Keep the two in sync — same source (verified 2026-07-12), different consumers.
+  hoursSpec: [
+    {
+      days: ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "11:00",
+      closes: "21:00",
+    },
+    { days: ["Friday"], opens: "11:00", closes: "22:00" },
+    { days: ["Saturday"], opens: "08:00", closes: "21:00" },
+    { days: ["Sunday"], opens: "08:00", closes: "20:00" },
+  ],
 } as const;
 
 export type Performer = { name: string; photo?: string; photoAlt?: string };

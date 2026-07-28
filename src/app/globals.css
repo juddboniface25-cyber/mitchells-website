@@ -1,16 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --color-olive: #7ba63f;
-  --color-olive-dark: #5f8a2c;
+  /* Olive carries text (CTA fills, links), so it is gated by contrast, not
+     by the wireframe's swatch: #7ba63f was 2.85:1 against white and failed
+     even the 3:1 UI floor. #4e7523 keeps the hue and reads 5.39:1 on white,
+     5.04:1 on cream. --color-olive-bright is the original, retained for
+     decorative fills that carry no text. */
+  --color-olive: #4e7523;
+  --color-olive-dark: #3d5c1b;
+  --color-olive-bright: #7ba63f;
   --color-pine: #2f7d3f;
   --color-cream: #fbf7ec;
   --color-cream-dark: #efece5;
   --color-cream-alt: #f6f4ee;
   --color-ink: #26331d;
   --color-body: #3a3a36;
-  --color-muted: #7c7768;
-  --color-faint: #8a877e;
+  --color-muted: #63604f;
+  --color-faint: #6f6b5c;
   --color-terracotta: #e14b25;
   --color-gold: #f4c020;
   --color-teal-brand: #12857a;
@@ -19,6 +25,25 @@
   --color-butter: #ffe08a;
   --color-leader: #cdbd97;
   --color-line: #e4e1d7;
+  /* Size-gated accents. The base brand hues above clear 3:1 and are correct
+     under the menu's 27px banner titles, but all of them fail 4.5:1 at chip
+     and label size. These are the same hues darkened for small text on a
+     brand fill — pick by text size, not by taste. */
+  --color-terracotta-deep: #b83916;
+  --color-lake-deep: #125c80;
+  --color-teal-deep: #0b5f57;
+  --color-pine-deep: #245c2f;
+  /* Decorative card/tile edges — not interactive, so 1.4.11 does not apply. */
+  --color-line-strong: #cfccc2;
+  /* The only visual boundary of an interactive control, so it must clear
+     3:1 against both cream and white (3.19 / 3.41). */
+  --color-control: #8f8b7c;
+}
+
+:root {
+  /* Nav height is applied to the <nav> element and read back by the menu
+     page's sticky category bar, so the two cannot drift apart. */
+  --nav-h: 72px;
 }
 
 @theme inline {
@@ -47,6 +72,14 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Keyboard navigation is only usable if focus is visible. Pine reads 4.75:1
+   on cream and 5.09:1 under white text, so one ring works on every surface. */
+:focus-visible {
+  outline: 2px solid var(--color-pine);
+  outline-offset: 2px;
+  border-radius: 3px;
 }
 
 /* Consistent 200ms color transitions on interactive elements */

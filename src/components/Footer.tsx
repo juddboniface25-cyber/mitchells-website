@@ -91,7 +91,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <p className="mx-auto max-w-6xl px-5 py-4 text-xs text-[#8a877e]">
+        <p className="mx-auto max-w-6xl px-5 py-4 text-xs text-[#b9b6ab]">
           © {new Date().getFullYear()} {restaurant.name}. A 3% credit card
           charge applies to all credit transactions; a cash discount is
           available upon paying cash.
