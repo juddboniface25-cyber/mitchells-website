@@ -44,6 +44,17 @@ export default function ContactPage() {
             </li>
             <li>
               <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
+                Parking &amp; Arriving
+              </div>
+              <p className="text-body">
+                Parking is on site off Trading Post Rd &mdash; or arrive by
+                water. We&apos;re on the lake at Mitchell&apos;s Point Marina,
+                so you can come by boat, tie up at the dock and walk straight
+                up to the pavilion.
+              </p>
+            </li>
+            <li>
+              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
                 Phone / Reservations
               </div>
               <a href={restaurant.phoneHref} className="hover:text-pine">
@@ -102,9 +113,24 @@ export default function ContactPage() {
             can shift with the season — call ahead for large parties.
           </p>
           <Button href={restaurant.phoneHref} className="mt-5">
-            Call to Reserve a Table
+            Call to Reserve
           </Button>
         </div>
+
+        {/* Reserved for the marina parking / dock-approach photo. Striped
+            placeholder is the brand's stand-in pattern; drop the image in and
+            swap this block for <Image> when Mitchell supplies it. */}
+        <figure className="md:col-span-2">
+          <div className="stripes h-56 md:h-72 rounded-[9px] border-[1.5px] border-dashed border-line-strong flex items-center justify-center">
+            <span className="font-display font-medium text-sm uppercase tracking-wide text-faint bg-cream/80 px-4 py-2 rounded-md">
+              Photo coming soon
+            </span>
+          </div>
+          <figcaption className="text-sm text-muted mt-2">
+            The view from the parking lot and the marina docks &mdash; so you
+            know what to look for whether you arrive by road or by water.
+          </figcaption>
+        </figure>
       </div>
     </>
   );

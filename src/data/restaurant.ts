@@ -18,6 +18,12 @@ export const restaurant = {
     "https://www.toasttab.com/local/order/mitchells-restaurant-lakeside-pizzeria-3553-trading-post-rd/r-282fad48-ce33-4214-b3ff-2e254166a626",
   mapsUrl:
     "https://maps.google.com/?q=3553+Trading+Post+Rd,+Huddleston,+VA+24104",
+  // Destination for the Events booking form. The form composes a mailto: —
+  // no backend, no secrets — so this one string is the whole configuration.
+  // Currently Judd's address, set 2026-08-18 to test the form end to end.
+  // TODO(Mitchell): swap for the restaurant's booking inbox before handoff.
+  // Empty string disables the form behind its phone/Facebook notice.
+  bookingEmail: "juddboniface25@gmail.com" as string,
   hours: [
     { days: "Monday – Thursday", time: "11:00am – 9:00pm" },
     { days: "Friday", time: "11:00am – 10:00pm" },

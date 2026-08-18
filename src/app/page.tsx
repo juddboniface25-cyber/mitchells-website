@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/Button";
-import { performers, restaurant } from "@/data/restaurant";
+import { restaurant } from "@/data/restaurant";
 
 export default function Home() {
   return (
@@ -28,69 +27,12 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-2">
             <Button href={restaurant.phoneHref} size="lg">
-              Reserve a Table
+              Call to Reserve
             </Button>
             <Button href="/events" variant="secondary" size="lg">
               See Live Music ♪
             </Button>
           </div>
-        </div>
-      </section>
-
-      {/* Live music strip */}
-      <section className="border-b-[1.5px] border-line">
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          <div className="flex items-baseline justify-between mb-6">
-            <h2 className="font-script font-bold text-3xl md:text-4xl text-ink">
-              Live Music at the Lake ♪
-            </h2>
-            <Link
-              href="/events"
-              className="text-olive font-display font-medium text-sm hover:text-olive-dark"
-            >
-              See the lineup →
-            </Link>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {performers.slice(0, 3).map((p) => (
-              <div
-                key={p.name}
-                className="border-[1.5px] border-dashed border-line-strong rounded-[9px] p-4 bg-white/40"
-              >
-                {p.photo ? (
-                  <div className="relative h-24 rounded-md mb-3 overflow-hidden">
-                    <Image
-                      src={p.photo}
-                      alt={p.photoAlt ?? p.name}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 640px) 33vw, 100vw"
-                    />
-                  </div>
-                ) : (
-                  <div className="stripes h-24 rounded-md mb-3" />
-                )}
-                <div className="font-display font-semibold text-pine text-sm uppercase tracking-wide">
-                  On the stage
-                </div>
-                <div className="font-display font-medium text-ink text-lg mt-1">
-                  {p.name}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-sm text-muted mt-4">
-            The weekly lineup is announced on{" "}
-            <a
-              href={restaurant.facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pine underline decoration-dotted underline-offset-4"
-            >
-              Facebook
-            </a>
-            .
-          </p>
         </div>
       </section>
 

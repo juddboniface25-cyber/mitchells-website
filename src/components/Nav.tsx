@@ -145,7 +145,7 @@ export function Nav() {
           <Button href={restaurant.orderOnlineUrl} variant="secondary" external>
             Order Online
           </Button>
-          <Button href={restaurant.phoneHref}>Reserve a Table</Button>
+          <Button href={restaurant.phoneHref}>Call to Reserve</Button>
         </div>
 
         {/* mobile toggle */}
@@ -224,7 +224,7 @@ export function Nav() {
               Order Online
             </Button>
             <Button href={restaurant.phoneHref} className="flex-1">
-              Reserve a Table
+              Call to Reserve
             </Button>
           </div>
         </div>

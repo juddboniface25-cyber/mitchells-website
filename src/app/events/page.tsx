@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { BookingForm } from "@/components/BookingForm";
 import { Button } from "@/components/Button";
+import { weeklyLineup } from "@/data/events";
 import { performers, restaurant } from "@/data/restaurant";
 
 export const metadata: Metadata = {
   title: "Live Music & Events",
   description:
-    "Live music on the lake at Mitchell's Restaurant & Pizzeria, Huddleston VA. See this week's lineup on Facebook.",
+    "This week's live-music lineup at Mitchell's Restaurant & Pizzeria, Huddleston VA — who's playing, which night, what time. Booking inquiries welcome.",
 };
 
 export default function EventsPage() {
+  const { weekOf, shows } = weeklyLineup;
+
   return (
     <>
       {/* Hero — sunset over the water */}
@@ -35,81 +39,123 @@ export default function EventsPage() {
         </div>
       </section>
 
-      {/* This week */}
+      {/* This week's lineup — hand-maintained in src/data/events.ts */}
       <section className="border-b-[1.5px] border-line">
-        <div className="mx-auto max-w-6xl px-5 py-12 flex flex-col md:flex-row gap-6 md:items-center">
-          <div className="relative w-full md:w-64 h-40 rounded-[9px] overflow-hidden border-[1.5px] border-line shrink-0">
-            <Image
-              src="/images/social-lake.jpg"
-              alt="Mitchell's Point Marina docks on Smith Mountain Lake"
-              fill
-              className="object-cover"
-              sizes="(min-width: 768px) 256px, 100vw"
-            />
-          </div>
-          <div className="flex flex-col gap-3 items-start">
+        <div className="mx-auto max-w-6xl px-5 py-12">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <span className="px-3 py-1 bg-olive text-white rounded-md font-display font-medium text-sm">
               THIS WEEK&apos;S LINEUP
             </span>
-            <h2 className="font-script font-bold text-3xl text-ink">
-              Announced every week on Facebook
-            </h2>
-            <p className="text-muted max-w-lg">
-              Mitchell&apos;s posts each week&apos;s live-music schedule —
-              who&apos;s playing, nights and start times — on the Facebook
-              page. Give it a follow so you never miss a show.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-1">
-              <Button href={restaurant.facebookUrl} external>
-                See the Lineup on Facebook
-              </Button>
-              <Button href={restaurant.phoneHref} variant="secondary">
-                Reserve a Table for the Show
-              </Button>
-            </div>
+            {weekOf && (
+              <span className="font-display font-medium text-muted">
+                Week of {weekOf}
+              </span>
+            )}
           </div>
+
+          {shows.length > 0 ? (
+            <>
+              <ul className="divide-y divide-dashed divide-line border-y-[1.5px] border-dashed border-line-strong">
+                {shows.map((s) => (
+                  <li
+                    key={`${s.night}-${s.act}`}
+                    className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-6 py-4"
+                  >
+                    <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine sm:w-40 shrink-0">
+                      {s.night}
+                      {s.date && (
+                        <span className="text-faint normal-case font-medium">
+                          {" "}
+                          · {s.date}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-display font-medium text-ink text-lg">
+                        {s.act}
+                      </div>
+                      {s.note && (
+                        <div className="text-sm text-faint">{s.note}</div>
+                      )}
+                    </div>
+                    <div className="font-menu font-semibold text-[15px] text-ink shrink-0">
+                      {s.start}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap gap-3 mt-6">
+                <Button href={restaurant.phoneHref}>Call to Reserve</Button>
+                <Button
+                  href={restaurant.facebookUrl}
+                  variant="secondary"
+                  external
+                >
+                  More on Facebook
+                </Button>
+              </div>
+            </>
+          ) : (
+            /* No lineup posted yet — say so plainly rather than show an empty
+               table or last week's acts. */
+            <div className="flex flex-col md:flex-row gap-6 md:items-center">
+              <div className="relative w-full md:w-64 h-40 rounded-[9px] overflow-hidden border-[1.5px] border-line shrink-0">
+                <Image
+                  src="/images/social-lake.jpg"
+                  alt="Mitchell's Point Marina docks on Smith Mountain Lake"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 256px, 100vw"
+                />
+              </div>
+              <div className="flex flex-col gap-3 items-start">
+                <h2 className="font-script font-bold text-3xl text-ink">
+                  This week&apos;s shows are still coming together
+                </h2>
+                <p className="text-muted max-w-lg">
+                  We post each week&apos;s acts — who&apos;s playing, which
+                  night and what time — right here as soon as they&apos;re
+                  confirmed. Facebook gets them too, so follow along there if
+                  you&apos;d rather not check back.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-1">
+                  <Button href={restaurant.facebookUrl} external>
+                    See the Lineup on Facebook
+                  </Button>
+                  <Button href={restaurant.phoneHref} variant="secondary">
+                    Call to Reserve
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Regulars */}
-      <section className="bg-cream-alt">
-        <div className="mx-auto max-w-6xl px-5 py-12">
-          <h2 className="font-script font-bold text-3xl md:text-4xl text-ink mb-6">
+      {/* Regulars — names only. The card grid this replaced showed a striped
+          placeholder tile for every act without a photo. */}
+      <section className="border-b-[1.5px] border-line bg-cream-alt">
+        <div className="mx-auto max-w-6xl px-5 py-10">
+          <h2 className="font-script font-bold text-2xl md:text-3xl text-ink mb-4">
             Acts you&apos;ll catch on our stage
           </h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="flex flex-wrap gap-2.5">
             {performers.map((p) => (
-              <div
+              <li
                 key={p.name}
-                className="border-[1.5px] border-dashed border-line-strong rounded-[9px] p-4 bg-white/60"
+                className="px-4 py-1.5 rounded-full border-[1.5px] border-line-strong bg-white/70 font-display font-medium text-body"
               >
-                {p.photo ? (
-                  <div className="relative h-40 rounded-md mb-3 overflow-hidden">
-                    <Image
-                      src={p.photo}
-                      alt={p.photoAlt ?? p.name}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    />
-                  </div>
-                ) : (
-                  <div className="stripes h-40 rounded-md mb-3" />
-                )}
-                <div className="font-display font-medium text-ink text-lg">
-                  {p.name}
-                </div>
-                <div className="text-sm text-faint">Live at Mitchell&apos;s</div>
-              </div>
+                {p.name}
+              </li>
             ))}
-          </div>
-          <p className="text-sm text-muted mt-6">
-            Want to play at Mitchell&apos;s? Call{" "}
-            <a href={restaurant.phoneHref} className="text-pine">
-              {restaurant.phoneDisplay}
-            </a>{" "}
-            or message the page on Facebook.
-          </p>
+          </ul>
+        </div>
+      </section>
+
+      {/* Booking / inquiries */}
+      <section>
+        <div className="mx-auto max-w-3xl px-5 py-12">
+          <BookingForm />
         </div>
       </section>
     </>
