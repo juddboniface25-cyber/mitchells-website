@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Button } from "@/components/Button";
 import { restaurant } from "@/data/restaurant";
 
@@ -117,14 +118,16 @@ export default function ContactPage() {
           </Button>
         </div>
 
-        {/* Reserved for the marina parking / dock-approach photo. Striped
-            placeholder is the brand's stand-in pattern; drop the image in and
-            swap this block for <Image> when Mitchell supplies it. */}
         <figure className="md:col-span-2">
-          <div className="stripes h-56 md:h-72 rounded-[9px] border-[1.5px] border-dashed border-line-strong flex items-center justify-center">
-            <span className="font-display font-medium text-sm uppercase tracking-wide text-faint bg-cream/80 px-4 py-2 rounded-md">
-              Photo coming soon
-            </span>
+          <div className="relative h-56 md:h-72 rounded-[9px] overflow-hidden border-[1.5px] border-dashed border-line-strong">
+            <Image
+              src="/images/marina-aerial.jpg"
+              alt="Aerial view of Mitchell's Point Marina and the surrounding docks on Smith Mountain Lake"
+              fill
+              quality={75}
+              className="object-cover"
+              sizes="(min-width: 768px) 66vw, 100vw"
+            />
           </div>
           <figcaption className="text-sm text-muted mt-2">
             The view from the parking lot and the marina docks &mdash; so you

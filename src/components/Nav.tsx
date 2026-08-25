@@ -13,6 +13,7 @@ const links = [
   { href: "/menu", label: "Menu", dropdown: true },
   { href: "/events", label: "Events" },
   { href: "/contact", label: "Contact" },
+  { href: restaurant.marinaUrl, label: "Marina", external: true },
 ];
 
 export function Nav() {
@@ -127,6 +128,16 @@ export function Nav() {
                   </div>
                 )}
               </div>
+            ) : l.external ? (
+              <a
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="pb-0.5 hover:text-pine"
+              >
+                {l.label}
+              </a>
             ) : (
               <Link
                 key={l.href}
@@ -189,18 +200,30 @@ export function Nav() {
           id="mobile-nav"
           className="md:hidden border-t-[1.5px] border-line bg-cream px-5 pb-5 pt-2 font-display font-medium text-body"
         >
-          {links.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              aria-current={pathname === l.href ? "page" : undefined}
-              className={`block py-2.5 border-b border-dashed border-line ${
-                pathname === l.href ? "text-pine" : ""
-              }`}
-            >
-              {l.label}
-            </Link>
-          ))}
+          {links.map((l) =>
+            l.external ? (
+              <a
+                key={l.href}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block py-2.5 border-b border-dashed border-line"
+              >
+                {l.label}
+              </a>
+            ) : (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={pathname === l.href ? "page" : undefined}
+                className={`block py-2.5 border-b border-dashed border-line ${
+                  pathname === l.href ? "text-pine" : ""
+                }`}
+              >
+                {l.label}
+              </Link>
+            )
+          )}
           {/* Desktop gets the category dropdown; on mobile there was no path
               to a specific section without scrolling the whole menu page. */}
           <div className="flex flex-wrap gap-2 mt-4">

@@ -18,6 +18,7 @@ export const restaurant = {
     "https://www.toasttab.com/local/order/mitchells-restaurant-lakeside-pizzeria-3553-trading-post-rd/r-282fad48-ce33-4214-b3ff-2e254166a626",
   mapsUrl:
     "https://maps.google.com/?q=3553+Trading+Post+Rd,+Huddleston,+VA+24104",
+  marinaUrl: "http://www.mitchellspoint.com",
   // Destination for the Events booking form. The form composes a mailto: —
   // no backend, no secrets — so this one string is the whole configuration.
   // Currently Judd's address, set 2026-08-18 to test the form end to end.
