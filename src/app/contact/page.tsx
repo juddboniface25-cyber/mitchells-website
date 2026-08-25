@@ -122,7 +122,7 @@ export default function ContactPage() {
           <div className="relative h-56 md:h-72 rounded-[9px] overflow-hidden border-[1.5px] border-dashed border-line-strong">
             <Image
               src="/images/marina-aerial.jpg"
-              alt="Aerial view of Mitchell's Point Marina and the surrounding docks on Smith Mountain Lake"
+              alt="Aerial view of Mitchell's Point Marina, showing the docks and the parking lot from above"
               fill
               quality={75}
               className="object-cover"
@@ -130,7 +130,7 @@ export default function ContactPage() {
             />
           </div>
           <figcaption className="text-sm text-muted mt-2">
-            The view from the parking lot and the marina docks &mdash; so you
+            An aerial view of the marina and parking options &mdash; so you
             know what to look for whether you arrive by road or by water.
           </figcaption>
         </figure>
