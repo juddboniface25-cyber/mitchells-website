@@ -1,140 +1,121 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Button } from "@/components/Button";
-import { restaurant } from "@/data/restaurant";
+import Link from "next/link";
+import { restaurant, hours, fmtHour, season } from "@/data/restaurant";
+import OpenNow from "@/components/OpenNow";
+import PointMap from "@/components/PointMap";
 
 export const metadata: Metadata = {
   title: "Contact & Hours",
-  description: `${restaurant.address} · ${restaurant.phoneDisplay}. Hours, directions and reservations.`,
+  description: `${restaurant.address}. Call ${restaurant.phoneDisplay}. Hours, directions by road and by boat, and how to reach the restaurant about parties and bookings.`,
 };
 
 export default function ContactPage() {
   return (
     <>
-      <div className="bg-pine text-white text-center px-5 pt-8 pb-7">
-        <h1 className="font-display font-semibold text-4xl md:text-5xl leading-none tracking-[.5px]">
-          Come See Us
-        </h1>
-        <p className="mt-2.5 font-menu font-semibold text-[13px] tracking-widest uppercase text-[#eef7e8]">
-          On the water at Smith Mountain Lake
-        </p>
-      </div>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-12 pb-10 grain">
+        <p className="eyebrow">Come see us</p>
+        <h1 className="display text-7xl sm:text-8xl lg:text-9xl mt-2">Contact &amp; Hours</h1>
+        <div className="rule2 left max-w-[10rem] mt-3 text-ink" />
+      </section>
 
-      <div className="mx-auto max-w-5xl px-5 py-12 grid gap-8 md:grid-cols-2">
-        {/* Find us */}
-        <div className="border-[1.5px] border-dashed border-line-strong rounded-[9px] bg-white/60 p-6">
-          <h2 className="font-script font-bold text-3xl text-ink mb-4">
-            Find Us
-          </h2>
-          <ul className="space-y-4 text-body">
-            <li>
-              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
-                Address
-              </div>
-              <a
-                href={restaurant.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline decoration-dotted underline-offset-4 hover:text-pine"
-              >
-                {restaurant.address}
-              </a>
-              <div className="text-sm text-faint mt-1">
-                Covered pavilion seating by the lake.
-              </div>
-            </li>
-            <li>
-              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
-                Parking &amp; Arriving
-              </div>
-              <p className="text-body">
-                Parking is on site off Trading Post Rd &mdash; or arrive by
-                water. We&apos;re on the lake at Mitchell&apos;s Point Marina,
-                so you can come by boat, tie up at the dock and walk straight
-                up to the pavilion.
-              </p>
-            </li>
-            <li>
-              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
-                Phone / Reservations
-              </div>
-              <a href={restaurant.phoneHref} className="hover:text-pine">
-                {restaurant.phoneDisplay}
-              </a>
-            </li>
-            <li>
-              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
-                Facebook
-              </div>
-              <a
-                href={restaurant.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-pine"
-              >
-                {restaurant.facebookHandle}
-              </a>
-            </li>
-            <li>
-              <div className="font-display font-semibold text-sm uppercase tracking-wide text-pine mb-1">
-                Order Online
-              </div>
-              <a
-                href={restaurant.orderOnlineUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-pine"
-              >
-                Order pickup through Toast →
-              </a>
-            </li>
-          </ul>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 grid lg:grid-cols-12 gap-10">
+        {/* Left: the facts */}
+        <div className="lg:col-span-5 space-y-10">
+          <div className="border border-ink p-6 bg-paper">
+            <h2 className="display text-4xl">Where</h2>
+            <address className="not-italic serif text-lg mt-3 leading-relaxed">
+              {restaurant.streetAddress}
+              <br />
+              {restaurant.city}, {restaurant.region} {restaurant.postalCode}
+            </address>
+            <p className="text-sm text-ink-soft mt-2">
+              Follow Trading Post Road all the way down the point, through the campground loop, to the pavilion at
+              the end. Parking is on site. By water, tie up at the marina dock and walk up.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <a href={restaurant.mapsUrl} target="_blank" rel="noopener" className="btn solid">Directions</a>
+              <a href={restaurant.phoneHref} className="btn red">{restaurant.phoneDisplay}</a>
+            </div>
+          </div>
+
+          <div className="border border-ink p-6 bg-paper">
+            <div className="flex items-baseline justify-between gap-4 flex-wrap">
+              <h2 className="display text-4xl">When</h2>
+              <OpenNow />
+            </div>
+            <table className="w-full mt-4 text-sm">
+              <tbody>
+                {hours.map((d) => (
+                  <tr key={d.day} className="border-b border-line">
+                    <th scope="row" className="text-left font-bold py-2">{d.day}</th>
+                    <td className="py-2 text-right tabular-nums">
+                      {d.h ? `${fmtHour(d.h.open)} – ${fmtHour(d.h.close)}` : <span className="text-smoke">Closed</span>}
+                      {d.note && <span className="block text-[0.7rem] font-bold uppercase tracking-[0.12em] text-moss">{d.note}</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="text-sm text-ink-soft mt-4">
+              Open {season.months}; the 2027 season opens {season.opensLabel}. Hours move with the season, the
+              weather and the odd holiday, and the kitchen runs later on band nights. The phone is always right.
+            </p>
+          </div>
+
+          <div className="border border-ink p-6 bg-paper">
+            <h2 className="display text-4xl">Follow along</h2>
+            <p className="text-sm text-ink-soft mt-2">
+              The week&rsquo;s music, festival food windows, rain calls and early closes are posted on Facebook
+              first.
+            </p>
+            <ul className="mt-4 space-y-2 text-sm">
+              <li><a href={restaurant.facebookUrl} target="_blank" rel="noopener" className="underline-run">{restaurant.facebookHandle} on Facebook</a></li>
+              <li><a href={restaurant.orderOnlineUrl} target="_blank" rel="noopener" className="underline-run">Order online for pickup</a></li>
+              <li><a href={restaurant.marinaUrl} target="_blank" rel="noopener" className="underline-run">Mitchell&rsquo;s Point Marina</a></li>
+              <li><a href={restaurant.rentalsUrl} target="_blank" rel="noopener" className="underline-run">SML Boat Rentals, same point</a></li>
+            </ul>
+          </div>
         </div>
 
-        {/* Hours */}
-        <div className="border-[1.5px] border-dashed border-line-strong rounded-[9px] bg-white/60 p-6">
-          <h2 className="font-script font-bold text-3xl text-ink mb-4">
-            Hours
-          </h2>
-          <ul className="divide-y divide-dashed divide-line">
-            {restaurant.hours.map((h) => (
-              <li
-                key={h.days}
-                className="flex justify-between py-3 font-menu font-semibold text-[15px]"
-              >
-                <span className="uppercase tracking-[.3px] text-ink">
-                  {h.days}
-                </span>
-                <span className="text-pine">{h.time}</span>
-              </li>
-            ))}
-          </ul>
-          <p className="text-sm text-muted mt-4">
-            Open for breakfast Saturday &amp; Sunday mornings. Kitchen hours
-            can shift with the season — call ahead for large parties.
-          </p>
-          <Button href={restaurant.phoneHref} className="mt-5">
-            Call to Reserve
-          </Button>
-        </div>
-
-        <figure className="md:col-span-2">
-          <div className="relative h-56 md:h-72 rounded-[9px] overflow-hidden border-[1.5px] border-dashed border-line-strong">
-            <Image
-              src="/images/marina-aerial.jpg"
-              alt="Aerial view of Mitchell's Point Marina, showing the docks and the parking lot from above"
-              fill
-              quality={75}
-              className="object-cover"
-              sizes="(min-width: 768px) 66vw, 100vw"
+        {/* Right: the map, three ways */}
+        <div className="lg:col-span-7 space-y-6">
+          <div className="border border-ink bg-cream p-4">
+            <p className="eyebrow mb-3">The point, by road and by water</p>
+            <PointMap />
+          </div>
+          <div className="border border-ink overflow-hidden aspect-[4/3]">
+            <iframe
+              title="Map to Mitchell's Restaurant & Pizzeria"
+              src={restaurant.mapsEmbed}
+              className="w-full h-full"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
             />
           </div>
-          <figcaption className="text-sm text-muted mt-2">
-            An aerial view of the marina and parking options &mdash; so you
-            know what to look for whether you arrive by road or by water.
-          </figcaption>
-        </figure>
-      </div>
+          <figure>
+            <div className="frame aspect-[3/2] border border-ink">
+              <Image src="/img/marina-aerial.jpg" alt="Aerial view of the point at Mitchell's Point Marina, showing the road in, the parking loop, the covered docks and the pavilion at the tip" fill sizes="(min-width:1024px) 58vw, 100vw" />
+            </div>
+            <figcaption className="text-sm text-smoke mt-2">
+              The point from above: the road and parking loop, the covered slips on the left, the pavilion and gas
+              dock at the tip.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 mt-20 border border-ink bg-cream p-6 sm:p-10 grid md:grid-cols-[1fr_auto] gap-6 items-center">
+        <div>
+          <p className="eyebrow">Parties, bands, big orders</p>
+          <h2 className="display text-5xl mt-2">Tell us what you have in mind</h2>
+          <p className="text-sm text-ink-soft mt-3 max-w-xl">
+            The inquiry form lives on the music page and opens an email straight to the restaurant.
+          </p>
+        </div>
+        <Link href="/events#form" className="btn solid">Open the form</Link>
+      </section>
     </>
   );
 }

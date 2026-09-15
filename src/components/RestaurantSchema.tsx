@@ -1,14 +1,14 @@
-import { restaurant } from "@/data/restaurant";
+import { restaurant, hoursSpec } from "@/data/restaurant";
 
 /**
- * schema.org Restaurant markup — what Google Local reads to build the
- * knowledge panel, hours strip and "open now" badge in search results.
- * Every value is generated from `@/data/restaurant`, so the page, the
- * footer and the structured data can never disagree.
+ * schema.org Restaurant markup, what Google Local reads to build the
+ * knowledge panel, hours strip and "open now" badge. Every value comes from
+ * `@/data/restaurant`, so the page, the footer and the structured data can
+ * never disagree.
  *
- * Deliberately omitted: `geo`. Latitude/longitude for the marina have not
- * been verified, and wrong coordinates would misroute customers on a
- * lake with limited road access. Add once confirmed with Mitchell.
+ * Deliberately omitted: `geo`. Coordinates for the marina have not been
+ * verified, and wrong ones would misroute customers on a lake with limited
+ * road access. Add once confirmed with Mitchell.
  */
 export function RestaurantSchema() {
   const schema = {
@@ -18,11 +18,11 @@ export function RestaurantSchema() {
     name: restaurant.name,
     url: restaurant.siteUrl,
     telephone: restaurant.phoneDisplay,
-    priceRange: "$$",
+    priceRange: restaurant.priceRange,
     servesCuisine: ["Pizza", "American"],
     acceptsReservations: true,
     image: [`${restaurant.siteUrl}/opengraph-image.jpg`],
-    logo: `${restaurant.siteUrl}/images/logo.png`,
+    logo: `${restaurant.siteUrl}/brand/badge.png`,
     hasMenu: `${restaurant.siteUrl}/menu`,
     sameAs: [restaurant.facebookUrl],
     address: {
@@ -33,7 +33,7 @@ export function RestaurantSchema() {
       postalCode: restaurant.postalCode,
       addressCountry: "US",
     },
-    openingHoursSpecification: restaurant.hoursSpec.map((h) => ({
+    openingHoursSpecification: hoursSpec.map((h) => ({
       "@type": "OpeningHoursSpecification",
       dayOfWeek: [...h.days],
       opens: h.opens,
@@ -41,10 +41,7 @@ export function RestaurantSchema() {
     })),
     potentialAction: {
       "@type": "OrderAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: restaurant.orderOnlineUrl,
-      },
+      target: { "@type": "EntryPoint", urlTemplate: restaurant.orderOnlineUrl },
       deliveryMethod: "http://purl.org/goodrelations/v1#DeliveryModePickUp",
     },
   };

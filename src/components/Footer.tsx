@@ -1,101 +1,73 @@
 import Link from "next/link";
-import { Logo } from "@/components/Logo";
-import { restaurant } from "@/data/restaurant";
+import Image from "next/image";
+import { restaurant, hours, fmtHour, season } from "@/data/restaurant";
+import { menuMeta } from "@/data/menu";
 
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className="bg-ink text-cream-dark">
-      <div className="mx-auto max-w-6xl px-5 py-12 grid gap-10 md:grid-cols-3">
-        <div>
-          <div className="flex items-center gap-3 mb-4">
-            <Logo size={44} />
-            <span className="font-display font-medium text-lg text-white">
-              {restaurant.shortName}
-            </span>
-          </div>
-          <p className="text-sm text-[#b9b6ab] leading-relaxed">
-            Pizza, lake-grill favorites &amp; live music on Smith Mountain
-            Lake. Covered pavilion seating by the water.
-          </p>
+    <footer className="bg-ink text-paper mt-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14 grid gap-10 md:grid-cols-[auto_1fr_1fr_1fr] items-start">
+        <div className="flex flex-col items-start gap-4">
+          <Image
+            src="/brand/badge.png"
+            alt="Mitchell's Restaurant & Pizzeria"
+            width={120}
+            height={120}
+            className="bg-paper rounded-full p-1"
+          />
+          <p className="serif italic text-paper/80 max-w-[18rem]">{restaurant.tagline}</p>
         </div>
+
         <div>
-          <h3 className="font-script font-bold text-2xl text-butter mb-3">
-            Hours
-          </h3>
-          <ul className="text-sm space-y-1.5 text-[#d7d4ca]">
-            {restaurant.hours.map((h) => (
-              <li key={h.days} className="flex justify-between gap-4 max-w-64">
-                <span>{h.days}</span>
-                <span className="text-white">{h.time}</span>
+          <h2 className="display text-2xl mb-3">Find us</h2>
+          <address className="not-italic text-sm leading-6 text-paper/85">
+            {restaurant.streetAddress}
+            <br />
+            {restaurant.city}, {restaurant.region} {restaurant.postalCode}
+            <br />
+            <a href={restaurant.phoneHref} className="underline-run">{restaurant.phoneDisplay}</a>
+          </address>
+          <div className="mt-4 flex flex-wrap gap-3 text-xs font-bold tracking-[0.14em] uppercase">
+            <a href={restaurant.facebookUrl} target="_blank" rel="noopener" className="underline-run">Facebook</a>
+            <a href={restaurant.orderOnlineUrl} target="_blank" rel="noopener" className="underline-run">Order online</a>
+            <a href={restaurant.marinaUrl} target="_blank" rel="noopener" className="underline-run">The marina</a>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="display text-2xl mb-3">Hours</h2>
+          <ul className="text-sm text-paper/85 space-y-1">
+            {hours.map((d) => (
+              <li key={d.day} className="flex justify-between gap-4 border-b border-paper/10 pb-1">
+                <span>{d.day}</span>
+                <span className="tabular-nums">
+                  {d.h ? `${fmtHour(d.h.open)} – ${fmtHour(d.h.close)}` : "Closed"}
+                </span>
               </li>
             ))}
           </ul>
-          <p className="text-xs text-[#b9b6ab] mt-2">
-            Breakfast Saturday &amp; Sunday mornings.
+          <p className="mt-3 text-xs text-paper/60">
+            Open {season.months}. Kitchen hours move with the season and the weather; the phone is the sure thing.
           </p>
         </div>
+
         <div>
-          <h3 className="font-script font-bold text-2xl text-butter mb-3">
-            Find Us
-          </h3>
-          <ul className="text-sm space-y-2 text-[#d7d4ca]">
-            <li>
-              <a
-                href={restaurant.mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white underline decoration-dotted underline-offset-4"
-              >
-                {restaurant.address}
-              </a>
-            </li>
-            <li>
-              <a href={restaurant.phoneHref} className="hover:text-white">
-                {restaurant.phoneDisplay}
-              </a>
-            </li>
-            <li>
-              <a
-                href={restaurant.facebookUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white"
-              >
-                Facebook {restaurant.facebookHandle}
-              </a>
-            </li>
-            <li>
-              <a
-                href={restaurant.orderOnlineUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-white"
-              >
-                Order online
-              </a>
-            </li>
-            <li>
-              <Link href="/menu" className="hover:text-white">
-                Menu
-              </Link>
-              {" · "}
-              <Link href="/events" className="hover:text-white">
-                Events
-              </Link>
-              {" · "}
-              <Link href="/contact" className="hover:text-white">
-                Contact
-              </Link>
-            </li>
+          <h2 className="display text-2xl mb-3">Pages</h2>
+          <ul className="text-sm space-y-2">
+            <li><Link href="/" className="underline-run">Home</Link></li>
+            <li><Link href="/menu" className="underline-run">Menu</Link></li>
+            <li><Link href="/menu#pizza" className="underline-run">Pizza</Link></li>
+            <li><Link href="/events" className="underline-run">Live music &amp; events</Link></li>
+            <li><Link href="/contact" className="underline-run">Contact &amp; hours</Link></li>
+            <li><Link href="/events#form" className="underline-run">Play here, or book a party</Link></li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/10">
-        <p className="mx-auto max-w-6xl px-5 py-4 text-xs text-[#b9b6ab]">
-          © {new Date().getFullYear()} {restaurant.name}. A 3% credit card
-          charge applies to all credit transactions; a cash discount is
-          available upon paying cash.
-        </p>
+      <div className="border-t border-paper/10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-col sm:flex-row gap-2 justify-between text-[0.7rem] tracking-[0.1em] uppercase text-paper/50">
+          <span>© {new Date().getFullYear()} {restaurant.name} · {menuMeta.cardNote}</span>
+          <span className="whitespace-nowrap">Site by Designs by Judd</span>
+        </div>
       </div>
     </footer>
   );

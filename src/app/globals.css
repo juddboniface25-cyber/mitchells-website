@@ -1,104 +1,234 @@
 @import "tailwindcss";
 
+/*
+  Mitchell's - tokens read off the owner's own materials: the green badge
+  (sampled #86ac4a), the cream paper and coral of the weekly lineup flyers,
+  and the teal of the lake in the same flyers. Display type is the tall
+  condensed caps stamped across every flyer; the serif carries the ledes.
+
+  Leaf is the badge green and carries no text (2.6:1 on paper). Moss is the
+  same hue darkened until it reads 5.4:1 on white, so it can carry buttons,
+  links and small labels. Pick by text size, not by taste.
+*/
 @theme {
-  /* Olive carries text (CTA fills, links), so it is gated by contrast, not
-     by the wireframe's swatch: #7ba63f was 2.85:1 against white and failed
-     even the 3:1 UI floor. #4e7523 keeps the hue and reads 5.39:1 on white,
-     5.04:1 on cream. --color-olive-bright is the original, retained for
-     decorative fills that carry no text. */
-  --color-olive: #4e7523;
-  --color-olive-dark: #3d5c1b;
-  --color-olive-bright: #7ba63f;
-  --color-pine: #2f7d3f;
-  --color-cream: #fbf7ec;
-  --color-cream-dark: #efece5;
-  --color-cream-alt: #f6f4ee;
-  --color-ink: #26331d;
-  --color-body: #3a3a36;
-  --color-muted: #63604f;
-  --color-faint: #6f6b5c;
-  --color-terracotta: #e14b25;
-  --color-gold: #f4c020;
-  --color-teal-brand: #12857a;
-  --color-lake: #1f8fc4;
-  --color-tangerine: #f39a12;
-  --color-butter: #ffe08a;
-  --color-leader: #cdbd97;
-  --color-line: #e4e1d7;
-  /* Size-gated accents. The base brand hues above clear 3:1 and are correct
-     under the menu's 27px banner titles, but all of them fail 4.5:1 at chip
-     and label size. These are the same hues darkened for small text on a
-     brand fill — pick by text size, not by taste. */
-  --color-terracotta-deep: #b83916;
-  --color-lake-deep: #125c80;
-  --color-teal-deep: #0b5f57;
-  --color-pine-deep: #245c2f;
-  /* Decorative card/tile edges — not interactive, so 1.4.11 does not apply. */
-  --color-line-strong: #cfccc2;
-  /* The only visual boundary of an interactive control, so it must clear
-     3:1 against both cream and white (3.19 / 3.41). */
-  --color-control: #8f8b7c;
-}
+  --color-paper: #fbf8ef;
+  --color-cream: #f3ead6;
+  --color-ink: #1b1f18;
+  --color-ink-soft: #33382f;
+  --color-smoke: #6b6f64;
+  --color-line: #d9d3c2;
+  --color-leaf: #86ac4a;
+  --color-moss: #4e7523;
+  --color-moss-deep: #3d5c1b;
+  --color-coral: #e0565c;
+  --color-coral-deep: #b9363c;
+  --color-lake: #0b6d87;
 
-:root {
-  /* Nav height is applied to the <nav> element and read back by the menu
-     page's sticky category bar, so the two cannot drift apart. */
-  --nav-h: 72px;
-}
-
-@theme inline {
-  --font-script: var(--font-caveat);
-  --font-display: var(--font-fredoka);
-  --font-menu: var(--font-barlow);
-}
-
-body {
-  background: var(--color-cream);
-  color: var(--color-body);
-  font-family: system-ui, sans-serif;
-}
-
-/* Diagonal-stripe placeholder pattern — part of the brand language until
-   real photography is supplied (see design reference). */
-.stripes {
-  background: repeating-linear-gradient(
-    48deg,
-    #e8e5db,
-    #e8e5db 11px,
-    #dedbcf 11px,
-    #dedbcf 22px
-  );
+  --font-display: var(--font-oswald), "Arial Narrow", "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-lora), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-nunito), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
 }
 
-/* Keyboard navigation is only usable if focus is visible. Pine reads 4.75:1
-   on cream and 5.09:1 under white text, so one ring works on every surface. */
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-leaf);
+  color: var(--color-ink);
+}
+
+@layer components {
+  /* Display caps, the flyer voice. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.92;
+  }
+
+  .serif {
+    font-family: var(--font-serif);
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-smoke);
+  }
+
+  /*
+    The badge's signature: two arrows with fletching bracketing the name.
+    Rendered as a long rule with a shorter one beneath it, the lower one
+    ending in an arrowhead.
+  */
+  .rule2 {
+    position: relative;
+    height: 10px;
+    width: 100%;
+  }
+  .rule2::before,
+  .rule2::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    background: currentColor;
+  }
+  .rule2::before { top: 0; width: 100%; }
+  .rule2::after {
+    top: 7px;
+    width: 55%;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
+    height: 3px;
+    top: 6px;
+  }
+  .rule2.left::before,
+  .rule2.left::after { left: 0; transform: none; }
+
+  /* Menu leaders: name ...... price */
+  .leader {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .leader .dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--color-line);
+    transform: translateY(-0.3em);
+    min-width: 1rem;
+  }
+
+  /* Ink stamp, tilted like the "NEW" marks on the printed menu. */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-coral-deep);
+    border: 1.5px solid var(--color-coral);
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    transform: rotate(-6deg);
+    white-space: nowrap;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 -0.15'/%3E%3C/filter%3E%3Crect width='120' height='40' fill='white' filter='url(%23n)'/%3E%3C/svg%3E");
+    mask-size: cover;
+  }
+  .stamp.green {
+    color: var(--color-moss);
+    border-color: var(--color-leaf);
+    background: #eef4df;
+    transform: rotate(4deg);
+  }
+
+  /* Marquee for the "made here" band. */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee > div {
+    display: inline-flex;
+    animation: marquee 70s linear infinite;
+  }
+  .marquee:hover > div { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee > div { animation: none; }
+  }
+
+  /* Scroll reveal: visible by default, animated only where the browser can. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 35%;
+      }
+    }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Paper texture, faint. */
+  .grain {
+    background-image: radial-gradient(rgba(27, 31, 24, 0.04) 1px, transparent 1px);
+    background-size: 6px 6px;
+  }
+
+  /* Photo frame with the ink border. */
+  .frame {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-cream);
+  }
+  .frame img {
+    object-fit: cover;
+  }
+
+  a.underline-run {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.25s ease;
+  }
+  a.underline-run:hover,
+  a.underline-run:focus-visible {
+    background-size: 100% 1.5px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    padding: 0.85rem 1.35rem;
+    border: 1.5px solid var(--color-ink);
+    color: var(--color-ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .btn:hover,
+  .btn:focus-visible { background: var(--color-ink); color: var(--color-paper); }
+  .btn.solid { background: var(--color-moss); border-color: var(--color-moss); color: #fff; }
+  .btn.solid:hover,
+  .btn.solid:focus-visible { background: var(--color-ink); border-color: var(--color-ink); }
+  .btn.red { border-color: var(--color-coral-deep); color: var(--color-coral-deep); }
+  .btn.red:hover,
+  .btn.red:focus-visible { background: var(--color-coral-deep); border-color: var(--color-coral-deep); color: #fff; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
 :focus-visible {
-  outline: 2px solid var(--color-pine);
-  outline-offset: 2px;
-  border-radius: 3px;
-}
-
-/* Consistent 200ms color transitions on interactive elements */
-a,
-button {
-  transition:
-    color 0.2s ease-out,
-    background-color 0.2s ease-out,
-    border-color 0.2s ease-out;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+  outline: 2px solid var(--color-moss);
+  outline-offset: 3px;
 }

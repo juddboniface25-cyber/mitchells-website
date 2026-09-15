@@ -1,201 +1,160 @@
 import type { Metadata } from "next";
-import {
-  finePrint,
-  menuCategories,
-  menuSections,
-  pizzaTable,
-  type MenuItem,
-  type MenuSection,
-} from "@/data/menu";
-import { restaurant } from "@/data/restaurant";
+import Image from "next/image";
+import { menuGroups, menuMeta, pizzaTable, type Section, type Item } from "@/data/menu";
+import { restaurant, season } from "@/data/restaurant";
+import Stamp from "@/components/Stamp";
+import MenuNav from "@/components/MenuNav";
 
 export const metadata: Metadata = {
   title: "Menu",
   description:
-    "Starters, salads, pizza, sandwiches, dinner plates and more at Mitchell's Restaurant & Pizzeria, Huddleston VA.",
+    "Hand-tossed pizza, calzones and stromboli, wings five ways, hand-pattied burgers, smoked brisket, crab cakes, salads and dinner plates at Mitchell's Restaurant & Pizzeria, Smith Mountain Lake.",
 };
 
-function ItemRow({ item }: { item: MenuItem }) {
+function Row({ item }: { item: Item }) {
   return (
-    <div className="break-inside-avoid mb-3.5">
-      <div className="flex justify-between items-baseline gap-2">
-        <span className="font-menu font-bold text-[15px] uppercase tracking-[.3px] text-ink">
-          {item.isNew && (
-            <span className="font-menu font-bold text-[9px] bg-terracotta text-white px-1.5 py-px rounded align-middle mr-1.5">
-              NEW
-            </span>
-          )}
-          {item.star && (
-            <span className="text-olive mr-1" title="Mitchell's favorite">
-              ★
-            </span>
-          )}
+    <li className="py-3">
+      <div className="leader">
+        <span className="display text-2xl tracking-wide flex items-center gap-2 flex-wrap">
           {item.name}
+          {item.tags?.map((t) => <Stamp key={t} tag={t} />)}
         </span>
-        <span className="flex-1 border-b-[1.5px] border-dotted border-leader translate-y-[-4px]" />
-        <span className="font-menu font-bold text-[15px] text-pine whitespace-nowrap">
-          {item.price}
-        </span>
+        {item.price && (
+          <>
+            <span className="dots" aria-hidden="true" />
+            <span className="display text-xl tabular-nums text-moss">{item.price}</span>
+          </>
+        )}
       </div>
-      {item.desc && (
-        <p className="text-[12.5px] leading-[1.38] text-muted mt-px">
-          {item.desc}
-        </p>
-      )}
-    </div>
+      {item.desc && <p className="text-sm text-ink-soft mt-0.5">{item.desc}</p>}
+    </li>
   );
 }
 
-function Banner({ section }: { section: MenuSection }) {
+function SectionBlock({ s }: { s: Section }) {
   return (
-    <div
-      className="px-5 py-2.5 rounded-[9px] mb-4 flex items-baseline gap-3.5 flex-wrap"
-      style={{ background: section.bannerBg }}
-    >
-      <span
-        className="font-display font-medium text-[27px] leading-none"
-        style={{ color: section.bannerColor }}
-      >
-        {section.title}
-      </span>
-      {section.note && (
-        <span
-          className="text-xs opacity-85"
-          style={{ color: section.bannerColor }}
-        >
-          {section.note}
-        </span>
+    <section id={s.id} className="scroll-mt-32 reveal">
+      <h3 className="display text-5xl">{s.title}</h3>
+      <div className="mt-2 h-[3px] w-24 bg-leaf" />
+      {s.note && <p className="text-sm text-smoke mt-3">{s.note}</p>}
+      {s.items && <ul className="mt-4 divide-y divide-line">{s.items.map((it) => <Row key={it.name} item={it} />)}</ul>}
+      {s.inline && (
+        <p className="display text-xl tracking-wide leading-[1.9] mt-4">{s.inline}</p>
       )}
-    </div>
-  );
-}
-
-function Section({ section }: { section: MenuSection }) {
-  return (
-    <section id={section.id} className="mb-8 scroll-mt-24">
-      <Banner section={section} />
-      {section.items && (
-        <div className="sm:columns-2 gap-9">
-          {section.items.map((item) => (
-            <ItemRow key={item.name} item={item} />
-          ))}
-        </div>
-      )}
-      {section.inline && (
-        <p className="font-menu font-semibold text-[15px] leading-[1.9] uppercase tracking-[.4px] text-ink">
-          {section.inline}
-        </p>
-      )}
-      {section.inlineNote && (
-        <p
-          className="mt-1.5 font-display font-semibold text-[15px] text-pine"
-        >
-          {section.inlineNote}
-        </p>
-      )}
-      {section.footnote && (
-        <p className="mt-2 font-menu font-semibold text-[13px] text-terracotta uppercase tracking-[.3px]">
-          {section.footnote}
-        </p>
-      )}
+      {s.inlineNote && <p className="text-sm text-moss font-bold mt-1">{s.inlineNote}</p>}
+      {s.footer && <p className="text-xs font-bold tracking-[0.12em] uppercase text-coral-deep mt-4">{s.footer}</p>}
     </section>
   );
 }
 
-function PizzaSection() {
+function PizzaTable() {
   return (
-    <section id="pizza" className="mb-8 scroll-mt-24">
-      <div className="px-5 py-2.5 rounded-[9px] mb-4 bg-teal-brand">
-        <span className="font-display font-medium text-[27px] leading-none text-butter">
-          pizza
-        </span>
-      </div>
-      <div className="grid md:grid-cols-2 gap-9 items-start">
-        <div>
-          <div className="flex pb-1 font-menu font-bold text-[11px] uppercase text-teal-brand">
-            <span className="flex-1" />
-            <span className="w-16 text-right">Small</span>
-            <span className="w-16 text-right">Large</span>
-          </div>
-          {pizzaTable.rows.map((row) => (
-            <div
-              key={row.name}
-              className="flex py-1.5 border-b border-dotted border-[#d9caa2]"
-            >
-              <span className="flex-1 font-menu font-bold text-[15px] uppercase tracking-[.3px] text-ink">
-                {row.name}
-              </span>
-              <span className="w-16 text-right font-menu font-bold text-[15px] text-pine">
-                {row.small}
-              </span>
-              <span className="w-16 text-right font-menu font-bold text-[15px] text-pine">
-                {row.large}
-              </span>
-            </div>
+    <section id="pizza-table" className="scroll-mt-32 reveal">
+      <h3 className="display text-5xl">By the pie</h3>
+      <div className="mt-2 h-[3px] w-24 bg-leaf" />
+      <table className="w-full mt-4 text-left">
+        <thead>
+          <tr className="text-[0.7rem] font-bold tracking-[0.14em] uppercase text-smoke">
+            <th scope="col" className="py-2 font-bold"></th>
+            <th scope="col" className="py-2 w-24 text-right font-bold">Small</th>
+            <th scope="col" className="py-2 w-24 text-right font-bold">Large</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-line">
+          {pizzaTable.rows.map((r) => (
+            <tr key={r.name}>
+              <th scope="row" className="py-2 display text-2xl tracking-wide font-medium">{r.name}</th>
+              <td className="py-2 text-right display text-xl tabular-nums text-moss">{r.small}</td>
+              <td className="py-2 text-right display text-xl tabular-nums text-moss">{r.large}</td>
+            </tr>
           ))}
-          <p className="font-menu font-bold text-xs text-terracotta uppercase mt-2.5 mb-1">
-            {pizzaTable.glutenFree}
-          </p>
-          <p className="text-[12.5px] leading-[1.38] text-muted">
-            {pizzaTable.toppings}
-          </p>
-        </div>
-        <div>
-          {pizzaTable.specials.map((item) => (
-            <ItemRow key={item.name} item={item} />
-          ))}
-        </div>
-      </div>
+        </tbody>
+      </table>
+      <p className="text-xs font-bold tracking-[0.12em] uppercase text-coral-deep mt-4">{pizzaTable.glutenFree}</p>
+      <p className="text-sm text-ink-soft mt-2">Toppings: {pizzaTable.toppings}</p>
     </section>
   );
 }
+
+const groupPhotos: Record<string, { src: string; alt: string }[]> = {
+  starters: [
+    { src: "/img/nachos.jpg", alt: "Nachos Grande" },
+    { src: "/img/wings.jpg", alt: "A basket of sauced wings with celery and ranch" },
+  ],
+  pizza: [
+    { src: "/img/margherita.jpg", alt: "Mitchell's margherita pizza on the deck" },
+    { src: "/img/pizzas.jpg", alt: "Pepperoni pizzas on trays" },
+    { src: "/img/pepperoni.jpg", alt: "A pepperoni pizza being cut" },
+  ],
+  sandwiches: [
+    { src: "/img/steak-sub.jpg", alt: "Steak and cheese sub with fries" },
+  ],
+  plates: [
+    { src: "/img/crew-porch.jpg", alt: "The pavilion at Mitchell's" },
+    { src: "/img/sunset-docks.jpg", alt: "Sunset from the marina dock" },
+  ],
+};
 
 export default function MenuPage() {
-  const before = menuSections.filter((s) =>
-    ["starters", "salads"].includes(s.id)
-  );
-  const after = menuSections.filter(
-    (s) => !["starters", "salads"].includes(s.id)
-  );
-
   return (
     <>
-      {/* Page banner */}
-      <div className="bg-pine text-white text-center px-5 pt-8 pb-7">
-        <h1 className="font-display font-semibold text-4xl md:text-5xl leading-none tracking-[.5px]">
-          Our Menu
-        </h1>
-        <p className="mt-2.5 font-menu font-semibold text-[13px] tracking-widest uppercase text-[#eef7e8]">
-          {restaurant.addressShort} · {restaurant.phoneDisplay}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-12 pb-8 grain">
+        <p className="eyebrow">The printed menu · {menuMeta.printedSeason}</p>
+        <h1 className="display text-7xl sm:text-8xl lg:text-9xl mt-2">Menu</h1>
+        <div className="rule2 left max-w-[10rem] mt-3 text-ink" />
+        <p className="serif text-lg mt-6 max-w-2xl leading-relaxed">
+          Lunch and dinner from 11, every day but Tuesday, {season.months}. Prices are the printed prices and can
+          move with the season. Gluten-free crust on any small pizza. Specials and the festival food window are
+          posted on{" "}
+          <a href={restaurant.facebookUrl} target="_blank" rel="noopener" className="underline-run">Facebook</a>.
         </p>
-      </div>
-
-      {/* Category chips */}
-      <div className="sticky top-[calc(var(--nav-h)+1.5px)] z-40 bg-cream/95 backdrop-blur border-b-[1.5px] border-line overflow-x-auto">
-        <div className="mx-auto max-w-5xl px-5 py-2.5 flex gap-2 whitespace-nowrap">
-          {menuCategories.map((c) => (
-            <a
-              key={c.id}
-              href={`#${c.id}`}
-              className="font-display font-medium text-[13px] px-3 py-1 rounded-full border border-control text-body hover:border-olive hover:text-pine"
-            >
-              {c.label}
-            </a>
-          ))}
+        <div className="mt-6 flex flex-wrap gap-3">
+          <a href={restaurant.orderOnlineUrl} target="_blank" rel="noopener" className="btn solid">Order online for pickup</a>
+          <a href={restaurant.phoneHref} className="btn">Call in an order · {restaurant.phoneDisplay}</a>
         </div>
-      </div>
+      </section>
 
-      <div className="mx-auto max-w-5xl px-5 py-9">
-        {before.map((s) => (
-          <Section key={s.id} section={s} />
-        ))}
-        <PizzaSection />
-        {after.map((s) => (
-          <Section key={s.id} section={s} />
-        ))}
-        <p className="mt-6 text-center italic text-[11px] text-faint max-w-2xl mx-auto">
-          {finePrint}
-        </p>
+      <MenuNav
+        groups={menuGroups.map((g) => ({
+          id: g.id,
+          label: g.label,
+          sections: [
+            ...(g.id === "pizza" ? [{ id: "pizza-table", title: "By the pie" }] : []),
+            ...g.sections.map((s) => ({ id: s.id, title: s.title })),
+          ],
+        }))}
+      />
+
+      {menuGroups.map((g, gi) => (
+        <section key={g.id} id={g.id} className={`scroll-mt-28 ${gi % 2 === 1 ? "bg-cream border-y border-ink" : ""}`}>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-16">
+            <div className="grid lg:grid-cols-[1fr_2fr] gap-12">
+              <div className="lg:sticky lg:top-32 self-start">
+                <h2 className="display text-6xl">{g.label}</h2>
+                <p className="serif italic text-smoke mt-2">{g.sub}</p>
+                <div className="mt-8 grid grid-cols-3 lg:grid-cols-1 gap-3">
+                  {groupPhotos[g.id]?.map((p, i) => (
+                    <div key={p.src} className={`frame border border-ink ${i === 0 ? "aspect-[4/5] lg:aspect-[4/3]" : "aspect-[4/5] lg:aspect-[16/9]"}`}>
+                      <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 25vw, 33vw" />
+                    </div>
+                  ))}
+                </div>
+                {g.id === "pizza" && (
+                  <Image src="/brand/badge.png" alt="" width={110} height={110} className="hidden lg:block mt-8 opacity-90" />
+                )}
+              </div>
+              <div className="space-y-14">
+                {g.id === "pizza" && <PizzaTable />}
+                {g.sections.map((s) => <SectionBlock key={s.id} s={s} />)}
+              </div>
+            </div>
+          </div>
+        </section>
+      ))}
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 mt-10 space-y-2 text-[0.7rem] uppercase tracking-[0.12em]">
+        <p className="text-coral-deep">*{menuMeta.disclaimer}</p>
+        <p className="text-smoke">{menuMeta.cardNote}</p>
       </div>
     </>
   );

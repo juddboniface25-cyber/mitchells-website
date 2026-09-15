@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/Button";
+import Link from "next/link";
 import { restaurant } from "@/data/restaurant";
 
 export const metadata: Metadata = {
@@ -8,30 +8,21 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="mx-auto max-w-2xl px-5 py-20 text-center">
-      <p className="font-display font-semibold text-sm uppercase tracking-wide text-pine">
-        404
-      </p>
-      <h1 className="font-script font-bold text-4xl md:text-5xl text-ink mt-2">
-        That page drifted off the dock.
-      </h1>
-      <p className="text-muted mt-4 max-w-md mx-auto">
-        We couldn&apos;t find what you were looking for — but the kitchen is
-        still open. Try the menu, or give us a call.
+    <div className="mx-auto max-w-2xl px-4 sm:px-6 py-24 text-center grain">
+      <p className="eyebrow">404</p>
+      <h1 className="display text-6xl sm:text-7xl mt-2">That page drifted off the dock.</h1>
+      <div className="rule2 mx-auto max-w-[8rem] mt-4 text-moss" />
+      <p className="serif text-lg text-ink-soft mt-6 max-w-md mx-auto">
+        We couldn&rsquo;t find what you were looking for, but the kitchen is still here. Try the menu, or give us
+        a call.
       </p>
       <div className="flex flex-wrap justify-center gap-3 mt-8">
-        <Button href="/menu" size="lg">
-          See the Full Menu
-        </Button>
-        <Button href="/" variant="secondary" size="lg">
-          Back to Home
-        </Button>
+        <Link href="/menu" className="btn solid">See the menu</Link>
+        <Link href="/" className="btn">Back to the point</Link>
       </div>
-      <p className="text-sm text-faint mt-8">
+      <p className="text-sm text-smoke mt-8">
         {restaurant.addressShort} ·{" "}
-        <a href={restaurant.phoneHref} className="text-pine">
-          {restaurant.phoneDisplay}
-        </a>
+        <a href={restaurant.phoneHref} className="underline-run text-ink">{restaurant.phoneDisplay}</a>
       </p>
     </div>
   );
