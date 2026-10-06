@@ -1,6 +1,7 @@
 /* "Site by Designs by Judd" credit for the footer of every DBJ build.
    Self-contained: no imports, no fonts, no images. It takes the footer's
-   own color and font, so it fits light and dark footers alike.
+   own color, size and font, so it matches the row it sits in on light and
+   dark footers alike.
    Usage: <DbjCredit site="kettle-creek-marina" /> in the footer's bottom row.
    Canonical copy: designs-by-judd/site/credit/DbjCredit.tsx. Edit it there
    and re-copy, so every site stays identical. */
@@ -17,10 +18,10 @@ export default function DbjCredit({ site }: { site: string }) {
       aria-label="Site by Designs by Judd (opens in a new tab)"
     >
       <style href="dbj-credit" precedence="default">{`
-        .dbj-credit { display: inline-flex; align-items: center; gap: .45em; color: inherit; font-size: .8125rem; line-height: 1; text-decoration: none; white-space: nowrap; opacity: .72; transition: opacity .2s ease; }
-        .dbj-credit:hover, .dbj-credit:focus-visible { opacity: 1; }
+        .dbj-credit { display: inline-flex; align-items: center; gap: .45em; color: inherit; font: inherit; line-height: 1; text-decoration: none; white-space: nowrap; }
         .dbj-credit svg { height: 1.3em; width: auto; flex: none; transition: transform .2s ease; }
-        .dbj-credit:hover svg { transform: translateY(-1px); }
+        .dbj-credit:hover svg, .dbj-credit:focus-visible svg { transform: translateY(-1px); }
+        .dbj-credit:hover b, .dbj-credit:focus-visible b { text-decoration: underline; text-underline-offset: .2em; }
         .dbj-credit b { font-weight: 600; }
       `}</style>
       <svg viewBox="40 110 1020 730" fill="none" aria-hidden="true">
